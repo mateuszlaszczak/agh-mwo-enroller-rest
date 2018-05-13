@@ -47,10 +47,25 @@ public class ParticipantRestController {
 
 	 }
 
-	 @RequestMapping(value = "/id", method = RequestMethod.DELETE)
-	 public void deleteParticipant(@PathVariable("id") String login){
-		//participantService.deleteParticipant(login);
-		
-		//return new ResponseEntity("User with that login was deleted"+ participant.getLogin() , HttpStatus.OK);
-	 }
+		@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+		public ResponseEntity<?> updateParticipant(@PathVariable("id") String login, @RequestBody Participant participant) {
+			Participant requestedParticipant = participantService.findByLogin(login);
+			if (requestedParticipant == null) {
+				return new ResponseEntity(HttpStatus.NOT_FOUND);
+			}
+			String newPassword=participant.getPassword();
+			requestedParticipant.setPassword(newPassword);
+			participantService.addParticipant(requestedParticipant);
+			return new ResponseEntity<Participant>(requestedParticipant, HttpStatus.OK);
+		}
+
+		@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+		public ResponseEntity<?> updateParticipant(@PathVariable("id") String login) {
+			Participant requestedParticipant = participantService.findByLogin(login);
+			if (requestedParticipant == null) {
+				return new ResponseEntity(HttpStatus.NOT_FOUND);
+			}
+			participantService.delete(requestedParticipant);
+			return new ResponseEntity<Participant>(requestedParticipant, HttpStatus.OK);
+}
 	 }

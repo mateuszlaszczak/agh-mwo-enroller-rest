@@ -31,10 +31,10 @@ public class ParticipantService {
 		transaction.commit();
 	}
 
-	public void deleteParticipant(Participant participant) {
-		org.hibernate.Transaction transaction = connector.getSession().beginTransaction();
-		connector.getSession().delete(participant);
-		transaction.commit();
+	public void delete(Participant requestedParticipant) {
+		org.hibernate.Transaction transaction=connector.getSession().beginTransaction();
+		connector.getSession().delete(requestedParticipant);
+transaction.commit(); 
 	}
 
 }
